@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # angular-seed — the seed for AngularJS apps
 
 This project is an application skeleton for a typical [AngularJS](http://angularjs.org/) web app.
@@ -287,3 +288,9 @@ For more information on AngularJS please check out http://angularjs.org/
 [karma]: http://karma-runner.github.io
 [travis]: https://travis-ci.org/
 [http-server]: https://github.com/nodeapps/http-server
+=======
+angular-broccoli
+================
+
+A skeleton project based on angular-seed that also includes a broccoli script to do compilation
+>>>>>>> d0c06b5f7b58300c5dc33372a14d1d15e9c30df5
