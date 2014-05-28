@@ -2,5 +2,9 @@
   "globalstrict": true,
   "globals": {
     "angular": false
-  }
+  },
+  "predef": ["angular"],
+  "undef": true,
+  "unused": true,
+  "strict": true
 }

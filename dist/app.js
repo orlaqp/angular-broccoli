@@ -1,6 +1,5 @@
 'use strict';
 
-
 // Declare app level module which depends on filters, and services
 angular.module('myApp', [
   'ngRoute',
@@ -15,19 +14,16 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.otherwise({redirectTo: '/view1'});
 }]);
 
-'use strict';
-
 /* Controllers */
 
 angular.module('myApp.controllers', [])
   .controller('MyCtrl1', ['$scope', function($scope) {
+    var a = "test for jshint";
 
   }])
   .controller('MyCtrl2', ['$scope', function($scope) {
 
   }]);
-
-'use strict';
 
 /* Directives */
 
@@ -39,8 +35,6 @@ angular.module('myApp.directives', []).
     };
   }]);
 
-'use strict';
-
 /* Filters */
 
 angular.module('myApp.filters', []).
@@ -49,8 +43,6 @@ angular.module('myApp.filters', []).
       return String(text).replace(/\%VERSION\%/mg, version);
     };
   }]);
-
-'use strict';
 
 /* Services */
 

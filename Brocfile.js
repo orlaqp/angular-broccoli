@@ -6,36 +6,36 @@ var moveFile = require('broccoli-file-mover');
 var uglifyJavaScript = require('broccoli-uglify-js');
 var helpers = require('broccoli-kitchen-sink-helpers');
 
-// console.log('multiGlob: %j', helpers.multiGlob(["app/bower_components/**/fonts/*"], { nomount: false }));
-
-var fontFiles = helpers.multiGlob(["app/bower_components/**/fonts/*"], { nomount: false });
-var filesToMove = {};
-fontFiles.forEach(function(file) {
-  filesToMove[file] = path.join('fonts/', path.basename(file));
-});
-console.log('fonts: %j', filesToMove);
-
-var fontTree = moveFile('.', { files: filesToMove });
 
 // request environment value from BROCCOLI_ENV variable
 // you can run the following to compile for production BROCCOLI_ENV=production broccoli build dist
 var env = require('broccoli-env').getEnv();
 console.log("Running in %s mode", env); // => 'development' or 'production'
 
+// console.log('multiGlob: %j', helpers.multiGlob(["app/bower_components/**/fonts/*"], { nomount: false }));
+
+var fontFiles = helpers.multiGlob(["app/bower_components/components-font-awesome/fonts/*"], { nomount: false });
+var filesToMove = {};
+fontFiles.forEach(function(file) {
+  var f = file.replace('app/bower_components/components-font-awesome/fonts', '');
+  filesToMove[f] = path.join('fonts/', path.basename(file));
+});
+// console.log('fonts: %j', filesToMove);
+var fontTree = moveFile('app/bower_components/components-font-awesome/fonts', { files: filesToMove, copy: false });
+
 // copy view files the same way they are
-var viewsTree = pickFiles('app', {
+var staticTree = pickFiles('app', {
   srcDir: '.',
-  files: ['**/*.html'],
+  files: ['*.html', 'views/**/*.html', 'img/**/*'],
   destDir: '.'
 });
 
 // copy font files
-var fontsTree = moveFile('app', {
-  srcDir: '.',
-  files: ['**/fonts/*'],
-  destDir: 'fonts/'
-});
-
+// var fontsTree = moveFile('app', {
+//   srcDir: '.',
+//   files: ['**/fonts/*'],
+//   destDir: 'fonts/'
+// });
 
 // find main files for bower components
 var findBowerTrees = require('broccoli-bower');
@@ -90,5 +90,8 @@ if (env === 'production') {
   });
 }
 
+// process our code using jshint
+var jshintTree = require('broccoli-jshint');
+var hintTree = jshintTree(jsTree);
 
-module.exports = mergeTrees([jsTree, cssTree, viewsTree, thirdPartyJS, thirdPartyCSS]);
+module.exports = mergeTrees([hintTree, fontTree, jsTree, cssTree, staticTree, thirdPartyJS, thirdPartyCSS], { overwrite: true });
